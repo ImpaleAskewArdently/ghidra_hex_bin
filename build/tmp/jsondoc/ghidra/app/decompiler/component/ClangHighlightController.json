@@ -1,0 +1,1189 @@
+{
+  "name": "ClangHighlightController",
+  "comment": "Class to handle highlights for a decompiled function.\n \n This class does not painting directly.  Rather, this class tracks the currently highlighted\n tokens and then sets the highlight color on the token when it is highlighted and clears the\n highlight color when the highlight is removed.\n \n This class maintains the following types of highlights:\n \n \tPrimary Highlights - triggered by user clicking and some user actions; considered transient\n  \tand get cleared whenever the location changes.  These highlights show state such as the\n \t\tcurrent field, impact of a variable (via a slicing action), or related syntax (such as\n \t\tmatching braces)\n  \n  Secondary Highlights - triggered by the user to show all occurrences of a particular\n  \tvariable; they will stay until they are manually cleared by a user action.  The user can\n  \tapply multiple secondary highlights at the same time, with different colors for each\n  \thighlight.\n   \tThese highlights apply to the function in use when the highlight is created.  Thus,\n  \teach function has a unique set of highlights that is maintained between decompilation.\n  \n  Global Highlights - triggered by clients of the DecompilerHighlightService; they\n  \twill stay until the client of the service clears the highlight.\n  \tThese highlights apply to every function that is decompiler.\n  \n \n \n When multiple highlights overlap, their colors will be blended.",
+  "javadoc": "Class to handle highlights for a decompiled function.\n \n \u003cp\u003eThis class does not painting directly.  Rather, this class tracks the currently highlighted\n tokens and then sets the highlight color on the token when it is highlighted and clears the\n highlight color when the highlight is removed.\n \n \u003cp\u003eThis class maintains the following types of highlights:\n \u003cUL\u003e\n \t\u003cLI\u003ePrimary Highlights - triggered by user clicking and some user actions; considered transient\n  \tand get cleared whenever the location changes.  These highlights show state such as the\n \t\tcurrent field, impact of a variable (via a slicing action), or related syntax (such as\n \t\tmatching braces)\n  \u003c/LI\u003e\n  \u003cLI\u003eSecondary Highlights - triggered by the user to show all occurrences of a particular\n  \tvariable; they will stay until they are manually cleared by a user action.  The user can\n  \tapply multiple secondary highlights at the same time, with different colors for each\n  \thighlight.\n   \t\u003cB\u003eThese highlights apply to the function in use when the highlight is created.  Thus,\n  \teach function has a unique set of highlights that is maintained between decompilation.\u003c/B\u003e\n  \u003c/LI\u003e\n  \u003cLI\u003eGlobal Highlights - triggered by clients of the {@link DecompilerHighlightService}; they\n  \twill stay until the client of the service clears the highlight.\n  \t\u003cB\u003eThese highlights apply to every function that is decompiler.\u003c/B\u003e\n  \u003c/LI\u003e\n \u003c/UL\u003e\n \n \u003cp\u003eWhen multiple highlights overlap, their colors will be blended.",
+  "static": false,
+  "implements": [],
+  "extends": "java.lang.Object",
+  "fields": [
+    {
+      "name": "DEFAULT_HIGHLIGHT_COLOR",
+      "comment": "",
+      "javadoc": "",
+      "static": true,
+      "type_long": "java.awt.Color",
+      "type_short": "Color",
+      "constant_value": null
+    },
+    {
+      "name": "defaultHighlightColor",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "type_long": "java.awt.Color",
+      "type_short": "Color",
+      "constant_value": null
+    },
+    {
+      "name": "defaultParenColor",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "type_long": "java.awt.Color",
+      "type_short": "Color",
+      "constant_value": null
+    },
+    {
+      "name": "primaryHighlightTokens",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "type_long": "ghidra.app.decompiler.component.TokenHighlights",
+      "type_short": "TokenHighlights",
+      "constant_value": null
+    },
+    {
+      "name": "secondaryHighlightersbyFunction",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "type_long": "java.util.Map\u003cghidra.program.model.listing.Function,java.util.List\u003cghidra.app.decompiler.component.ClangDecompilerHighlighter\u003e\u003e",
+      "type_short": "Map",
+      "constant_value": null
+    },
+    {
+      "name": "secondaryHighlighters",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "type_long": "java.util.Set\u003cghidra.app.decompiler.component.ClangDecompilerHighlighter\u003e",
+      "type_short": "Set",
+      "constant_value": null
+    },
+    {
+      "name": "highlighterHighlights",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "type_long": "java.util.Map\u003cghidra.app.decompiler.component.ClangDecompilerHighlighter,ghidra.app.decompiler.component.TokenHighlights\u003e",
+      "type_short": "Map",
+      "constant_value": null
+    },
+    {
+      "name": "secondaryHighlightColors",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "type_long": "ghidra.app.decompiler.component.TokenHighlightColors",
+      "type_short": "TokenHighlightColors",
+      "constant_value": null
+    },
+    {
+      "name": "updateId",
+      "comment": "A counter to track updates so that clients know when a buffered highlight request is invalid",
+      "javadoc": "A counter to track updates so that clients know when a buffered highlight request is invalid",
+      "static": false,
+      "type_long": "long",
+      "type_short": "long",
+      "constant_value": null
+    },
+    {
+      "name": "listeners",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "type_long": "java.util.List\u003cghidra.app.decompiler.component.ClangHighlightListener\u003e",
+      "type_short": "List",
+      "constant_value": null
+    }
+  ],
+  "methods": [
+    {
+      "name": "\u003cinit\u003e",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "dummyIfNull",
+      "comment": "",
+      "javadoc": "",
+      "static": true,
+      "params": [
+        {
+          "name": "c",
+          "type_long": "ghidra.app.decompiler.component.ClangHighlightController",
+          "type_short": "ClangHighlightController",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "ghidra.app.decompiler.component.ClangHighlightController",
+        "type_short": "ClangHighlightController",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "fieldLocationChanged",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "location",
+          "type_long": "docking.widgets.fieldpanel.support.FieldLocation",
+          "type_short": "FieldLocation",
+          "comment": ""
+        },
+        {
+          "name": "field",
+          "type_long": "docking.widgets.fieldpanel.field.Field",
+          "type_short": "Field",
+          "comment": ""
+        },
+        {
+          "name": "trigger",
+          "type_long": "docking.widgets.EventTrigger",
+          "type_short": "EventTrigger",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "setHighlightColor",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "c",
+          "type_long": "java.awt.Color",
+          "type_short": "Color",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "getRandomColorProvider",
+      "comment": "Returns the color provider used by this class to generate colors.  The initial color\n selection is random.  Repeated calls to get a color for the same token will return the same\n color.",
+      "javadoc": "Returns the color provider used by this class to generate colors.  The initial color\n selection is random.  Repeated calls to get a color for the same token will return the same\n color.\n@return the color provider",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "ghidra.app.decompiler.component.ColorProvider",
+        "type_short": "ColorProvider",
+        "comment": "the color provider"
+      },
+      "throws": []
+    },
+    {
+      "name": "getPrimaryHighlightedText",
+      "comment": "Returns the token that has the primary highlight applied, if any.  If multiple tokens are\n highlighted, then the return value is arbitrary.",
+      "javadoc": "Returns the token that has the primary highlight applied, if any.  If multiple tokens are\n highlighted, then the return value is arbitrary.\n@return the highlighted text",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "java.lang.String",
+        "type_short": "String",
+        "comment": "the highlighted text"
+      },
+      "throws": []
+    },
+    {
+      "name": "getUpdateId",
+      "comment": "An value that is updated every time a new highlight is added.  This allows clients to\n determine if a buffered update request is still valid.",
+      "javadoc": "An value that is updated every time a new highlight is added.  This allows clients to\n determine if a buffered update request is still valid.\n@return the value",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "long",
+        "type_short": "long",
+        "comment": "the value"
+      },
+      "throws": []
+    },
+    {
+      "name": "hasPrimaryHighlight",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "token",
+          "type_long": "ghidra.app.decompiler.ClangToken",
+          "type_short": "ClangToken",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "boolean",
+        "type_short": "boolean",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "hasSecondaryHighlight",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "token",
+          "type_long": "ghidra.app.decompiler.ClangToken",
+          "type_short": "ClangToken",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "boolean",
+        "type_short": "boolean",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "hasSecondaryHighlights",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "function",
+          "type_long": "ghidra.program.model.listing.Function",
+          "type_short": "Function",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "boolean",
+        "type_short": "boolean",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "getSecondaryHighlight",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "token",
+          "type_long": "ghidra.app.decompiler.ClangToken",
+          "type_short": "ClangToken",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "java.awt.Color",
+        "type_short": "Color",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "getSecondaryHighlightColors",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "ghidra.app.decompiler.component.TokenHighlightColors",
+        "type_short": "TokenHighlightColors",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "getPrimaryHighlights",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "ghidra.app.decompiler.component.TokenHighlights",
+        "type_short": "TokenHighlights",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "getSecondaryHighlighters",
+      "comment": "Returns all secondary highlighters for the given function.   This allows clients to update\n the secondary highlight state of a given function without affecting highlights applied to\n other functions.",
+      "javadoc": "Returns all secondary highlighters for the given function.   This allows clients to update\n the secondary highlight state of a given function without affecting highlights applied to\n other functions.\n@param function the function\n@return the highlighters",
+      "static": false,
+      "params": [
+        {
+          "name": "function",
+          "type_long": "ghidra.program.model.listing.Function",
+          "type_short": "Function",
+          "comment": "the function"
+        }
+      ],
+      "return": {
+        "type_long": "java.util.Set\u003cghidra.app.decompiler.component.ClangDecompilerHighlighter\u003e",
+        "type_short": "Set",
+        "comment": "the highlighters"
+      },
+      "throws": []
+    },
+    {
+      "name": "getGlobalHighlighters",
+      "comment": "Returns all global highlighters installed in this controller.  The global highlighters apply\n to all functions.  This is in contrast to secondary highlighters, which are\n function-specific.",
+      "javadoc": "Returns all global highlighters installed in this controller.  The global highlighters apply\n to all functions.  This is in contrast to secondary highlighters, which are\n function-specific.\n@return the highlighters",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "java.util.Set\u003cghidra.app.decompiler.component.ClangDecompilerHighlighter\u003e",
+        "type_short": "Set",
+        "comment": "the highlighters"
+      },
+      "throws": []
+    },
+    {
+      "name": "getHighlighterHighlights",
+      "comment": "Gets all highlights for the given highlighter.",
+      "javadoc": "Gets all highlights for the given highlighter.\n@param highlighter the highlighter\n@return the highlights\n@see #getPrimaryHighlights()",
+      "static": false,
+      "params": [
+        {
+          "name": "highlighter",
+          "type_long": "ghidra.app.decompiler.DecompilerHighlighter",
+          "type_short": "DecompilerHighlighter",
+          "comment": "the highlighter"
+        }
+      ],
+      "return": {
+        "type_long": "ghidra.app.decompiler.component.TokenHighlights",
+        "type_short": "TokenHighlights",
+        "comment": "the highlights"
+      },
+      "throws": []
+    },
+    {
+      "name": "getHighlightedToken",
+      "comment": "Return the current highlighted token (if exists and unique)",
+      "javadoc": "Return the current highlighted token (if exists and unique)\n@return token or null",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "ghidra.app.decompiler.ClangToken",
+        "type_short": "ClangToken",
+        "comment": "token or null"
+      },
+      "throws": []
+    },
+    {
+      "name": "gatherAllTokens",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "parentNode",
+          "type_long": "ghidra.app.decompiler.ClangNode",
+          "type_short": "ClangNode",
+          "comment": ""
+        },
+        {
+          "name": "results",
+          "type_long": "java.util.Set\u003cghidra.app.decompiler.ClangToken\u003e",
+          "type_short": "Set",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "clearPrimaryHighlights",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "doClearHighlights",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "tokenHighlights",
+          "type_long": "ghidra.app.decompiler.component.TokenHighlights",
+          "type_short": "TokenHighlights",
+          "comment": ""
+        },
+        {
+          "name": "clearer",
+          "type_long": "java.util.function.Consumer\u003cghidra.app.decompiler.ClangToken\u003e",
+          "type_short": "Consumer",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "togglePrimaryHighlights",
+      "comment": "Toggles the primary highlight state of the given set of tokens.  If the given tokens do not\n all have the same highlight state (highlights on or off), then the highlights will be\n cleared.  If all tokens are not highlighted, then they will all become highlighted.",
+      "javadoc": "Toggles the primary highlight state of the given set of tokens.  If the given tokens do not\n all have the same highlight state (highlights on or off), then the highlights will be\n cleared.  If all tokens are not highlighted, then they will all become highlighted.\n@param hlColor the highlight color\n@param tokens the tokens",
+      "static": false,
+      "params": [
+        {
+          "name": "hlColor",
+          "type_long": "java.awt.Color",
+          "type_short": "Color",
+          "comment": "the highlight color"
+        },
+        {
+          "name": "tokens",
+          "type_long": "java.util.function.Supplier\u003cjava.util.List\u003cghidra.app.decompiler.ClangToken\u003e\u003e",
+          "type_short": "Supplier",
+          "comment": "the tokens"
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "removeSecondaryHighlights",
+      "comment": "Removes all secondary highlights for the given function",
+      "javadoc": "Removes all secondary highlights for the given function\n@param f the function",
+      "static": false,
+      "params": [
+        {
+          "name": "f",
+          "type_long": "ghidra.program.model.listing.Function",
+          "type_short": "Function",
+          "comment": "the function"
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "removeSecondaryHighlights",
+      "comment": "Removes all secondary highlights for the given token",
+      "javadoc": "Removes all secondary highlights for the given token\n@param token the token\n@see #removeSecondaryHighlights(Function)",
+      "static": false,
+      "params": [
+        {
+          "name": "token",
+          "type_long": "ghidra.app.decompiler.ClangToken",
+          "type_short": "ClangToken",
+          "comment": "the token"
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "getSecondaryHighlighter",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "token",
+          "type_long": "ghidra.app.decompiler.ClangToken",
+          "type_short": "ClangToken",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "ghidra.app.decompiler.DecompilerHighlighter",
+        "type_short": "DecompilerHighlighter",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "removeHighlighter",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "highlighter",
+          "type_long": "ghidra.app.decompiler.DecompilerHighlighter",
+          "type_short": "DecompilerHighlighter",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "removeHighlighterHighlights",
+      "comment": "Removes all highlights for this highlighter across all functions",
+      "javadoc": "Removes all highlights for this highlighter across all functions\n@param highlighter the highlighter",
+      "static": false,
+      "params": [
+        {
+          "name": "highlighter",
+          "type_long": "ghidra.app.decompiler.DecompilerHighlighter",
+          "type_short": "DecompilerHighlighter",
+          "comment": "the highlighter"
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "addSecondaryHighlighter",
+      "comment": "Adds the given secondary highlighter, but does not create any highlights.  All secondary\n highlighters pertain to a given function.",
+      "javadoc": "Adds the given secondary highlighter, but does not create any highlights.  All secondary\n highlighters pertain to a given function.\n@param function the function\n@param highlighter the highlighter",
+      "static": false,
+      "params": [
+        {
+          "name": "function",
+          "type_long": "ghidra.program.model.listing.Function",
+          "type_short": "Function",
+          "comment": "the function"
+        },
+        {
+          "name": "highlighter",
+          "type_long": "ghidra.app.decompiler.component.ClangDecompilerHighlighter",
+          "type_short": "ClangDecompilerHighlighter",
+          "comment": "the highlighter"
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "addHighlighter",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "highlighter",
+          "type_long": "ghidra.app.decompiler.component.ClangDecompilerHighlighter",
+          "type_short": "ClangDecompilerHighlighter",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "addHighlighterHighlights",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "highlighter",
+          "type_long": "ghidra.app.decompiler.component.ClangDecompilerHighlighter",
+          "type_short": "ClangDecompilerHighlighter",
+          "comment": ""
+        },
+        {
+          "name": "tokens",
+          "type_long": "java.util.function.Supplier\u003c? extends java.util.Collection\u003cghidra.app.decompiler.ClangToken\u003e\u003e",
+          "type_short": "Supplier",
+          "comment": ""
+        },
+        {
+          "name": "colorProvider",
+          "type_long": "ghidra.app.decompiler.component.ColorProvider",
+          "type_short": "ColorProvider",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "addPrimaryHighlights",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "tokens",
+          "type_long": "java.util.function.Supplier\u003c? extends java.util.Collection\u003cghidra.app.decompiler.ClangToken\u003e\u003e",
+          "type_short": "Supplier",
+          "comment": ""
+        },
+        {
+          "name": "hlColor",
+          "type_long": "java.awt.Color",
+          "type_short": "Color",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "addPrimaryHighlights",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "parentNode",
+          "type_long": "ghidra.app.decompiler.ClangNode",
+          "type_short": "ClangNode",
+          "comment": ""
+        },
+        {
+          "name": "ops",
+          "type_long": "java.util.Set\u003cghidra.program.model.pcode.PcodeOp\u003e",
+          "type_short": "Set",
+          "comment": ""
+        },
+        {
+          "name": "hlColor",
+          "type_long": "java.awt.Color",
+          "type_short": "Color",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "addPrimaryHighlights",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "parentNode",
+          "type_long": "ghidra.app.decompiler.ClangNode",
+          "type_short": "ClangNode",
+          "comment": ""
+        },
+        {
+          "name": "colorProvider",
+          "type_long": "ghidra.app.decompiler.component.ColorProvider",
+          "type_short": "ColorProvider",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "addPrimaryHighlights",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "tokens",
+          "type_long": "java.util.Collection\u003cghidra.app.decompiler.ClangToken\u003e",
+          "type_short": "Collection",
+          "comment": ""
+        },
+        {
+          "name": "hlColor",
+          "type_long": "java.awt.Color",
+          "type_short": "Color",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "addTokensToHighlights",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "tokens",
+          "type_long": "java.util.Collection\u003cghidra.app.decompiler.ClangToken\u003e",
+          "type_short": "Collection",
+          "comment": ""
+        },
+        {
+          "name": "colorProvider",
+          "type_long": "ghidra.app.decompiler.component.ColorProvider",
+          "type_short": "ColorProvider",
+          "comment": ""
+        },
+        {
+          "name": "currentHighlights",
+          "type_long": "ghidra.app.decompiler.component.TokenHighlights",
+          "type_short": "TokenHighlights",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "addPrimaryHighlight",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "token",
+          "type_long": "ghidra.app.decompiler.ClangToken",
+          "type_short": "ClangToken",
+          "comment": ""
+        },
+        {
+          "name": "highlightColor",
+          "type_long": "java.awt.Color",
+          "type_short": "Color",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "doAddHighlight",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "clangToken",
+          "type_long": "ghidra.app.decompiler.ClangToken",
+          "type_short": "ClangToken",
+          "comment": ""
+        },
+        {
+          "name": "highlightColor",
+          "type_long": "java.awt.Color",
+          "type_short": "Color",
+          "comment": ""
+        },
+        {
+          "name": "currentHighlights",
+          "type_long": "ghidra.app.decompiler.component.TokenHighlights",
+          "type_short": "TokenHighlights",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "updateHighlightColor",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "t",
+          "type_long": "ghidra.app.decompiler.ClangToken",
+          "type_short": "ClangToken",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "add",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "colors",
+          "type_long": "java.util.List\u003cjava.awt.Color\u003e",
+          "type_short": "List",
+          "comment": ""
+        },
+        {
+          "name": "hlToken",
+          "type_long": "ghidra.app.decompiler.component.HighlightToken",
+          "type_short": "HighlightToken",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "add",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "colors",
+          "type_long": "java.util.List\u003cjava.awt.Color\u003e",
+          "type_short": "List",
+          "comment": ""
+        },
+        {
+          "name": "c",
+          "type_long": "java.awt.Color",
+          "type_short": "Color",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "getCombinedColor",
+      "comment": "Returns the current highlight color for the given token, based upon all known highlights,\n primary, secondary and highlighters",
+      "javadoc": "Returns the current highlight color for the given token, based upon all known highlights,\n primary, secondary and highlighters\n@param t the token\n@return the color",
+      "static": false,
+      "params": [
+        {
+          "name": "t",
+          "type_long": "ghidra.app.decompiler.ClangToken",
+          "type_short": "ClangToken",
+          "comment": "the token"
+        }
+      ],
+      "return": {
+        "type_long": "java.awt.Color",
+        "type_short": "Color",
+        "comment": "the color"
+      },
+      "throws": []
+    },
+    {
+      "name": "blend",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "colors",
+          "type_long": "java.util.List\u003cjava.awt.Color\u003e",
+          "type_short": "List",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "java.awt.Color",
+        "type_short": "Color",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "blendHighlighterColors",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "token",
+          "type_long": "ghidra.app.decompiler.ClangToken",
+          "type_short": "ClangToken",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "java.awt.Color",
+        "type_short": "Color",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "getFunction",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "t",
+          "type_long": "ghidra.app.decompiler.ClangToken",
+          "type_short": "ClangToken",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "ghidra.program.model.listing.Function",
+        "type_short": "Function",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "addPrimaryHighlightToTokensForParenthesis",
+      "comment": "If input token is a parenthesis, highlight all tokens between it and its match",
+      "javadoc": "If input token is a parenthesis, highlight all tokens between it and its match\n@param tok potential parenthesis token\n@param highlightColor the highlight color\n@return a list of all tokens that were highlighted.",
+      "static": false,
+      "params": [
+        {
+          "name": "tok",
+          "type_long": "ghidra.app.decompiler.ClangSyntaxToken",
+          "type_short": "ClangSyntaxToken",
+          "comment": "potential parenthesis token"
+        },
+        {
+          "name": "highlightColor",
+          "type_long": "java.awt.Color",
+          "type_short": "Color",
+          "comment": "the highlight color"
+        }
+      ],
+      "return": {
+        "type_long": "java.util.List\u003cghidra.app.decompiler.ClangToken\u003e",
+        "type_short": "List",
+        "comment": "a list of all tokens that were highlighted."
+      },
+      "throws": []
+    },
+    {
+      "name": "gatherContentsOfParenthesis",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "tok",
+          "type_long": "ghidra.app.decompiler.ClangSyntaxToken",
+          "type_short": "ClangSyntaxToken",
+          "comment": ""
+        },
+        {
+          "name": "parenId",
+          "type_long": "int",
+          "type_short": "int",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "java.util.List\u003cghidra.app.decompiler.ClangToken\u003e",
+        "type_short": "List",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "addBraceHighlight",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "token",
+          "type_long": "ghidra.app.decompiler.ClangSyntaxToken",
+          "type_short": "ClangSyntaxToken",
+          "comment": ""
+        },
+        {
+          "name": "highlightColor",
+          "type_long": "java.awt.Color",
+          "type_short": "Color",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "highlightBrace",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "startToken",
+          "type_long": "ghidra.app.decompiler.ClangSyntaxToken",
+          "type_short": "ClangSyntaxToken",
+          "comment": ""
+        },
+        {
+          "name": "highlightColor",
+          "type_long": "java.awt.Color",
+          "type_short": "Color",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "addListener",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "listener",
+          "type_long": "ghidra.app.decompiler.component.ClangHighlightListener",
+          "type_short": "ClangHighlightListener",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "removeListener",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "listener",
+          "type_long": "ghidra.app.decompiler.component.ClangHighlightListener",
+          "type_short": "ClangHighlightListener",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "notifyListeners",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "dispose",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    }
+  ]
+}

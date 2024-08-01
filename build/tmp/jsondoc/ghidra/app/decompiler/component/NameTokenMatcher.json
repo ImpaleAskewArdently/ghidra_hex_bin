@@ -1,0 +1,78 @@
+{
+  "name": "NameTokenMatcher",
+  "comment": "Matcher used for secondary highlights in the Decompiler.",
+  "javadoc": "Matcher used for secondary highlights in the Decompiler.",
+  "static": false,
+  "implements": [
+    "ghidra.app.decompiler.CTokenHighlightMatcher"
+  ],
+  "extends": "java.lang.Object",
+  "fields": [
+    {
+      "name": "colorProvider",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "type_long": "ghidra.app.decompiler.component.ColorProvider",
+      "type_short": "ColorProvider",
+      "constant_value": null
+    },
+    {
+      "name": "name",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "type_long": "java.lang.String",
+      "type_short": "String",
+      "constant_value": null
+    }
+  ],
+  "methods": [
+    {
+      "name": "\u003cinit\u003e",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "name",
+          "type_long": "java.lang.String",
+          "type_short": "String",
+          "comment": ""
+        },
+        {
+          "name": "colorProvider",
+          "type_long": "ghidra.app.decompiler.component.ColorProvider",
+          "type_short": "ColorProvider",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "getTokenHighlight",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "token",
+          "type_long": "ghidra.app.decompiler.ClangToken",
+          "type_short": "ClangToken",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "java.awt.Color",
+        "type_short": "Color",
+        "comment": ""
+      },
+      "throws": []
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "name": "CTokenHighlightMatcher",
+  "comment": "The interface that clients must define to create a DecompilerHighlighter\n \n Every function decompiled will trigger this matcher to get called.  The order of method\n calls is: #start(ClangNode), repeated calls to #getTokenHighlight(ClangToken)\n and then #end().",
+  "javadoc": "The interface that clients must define to create a {@link DecompilerHighlighter}\n \n \u003cp\u003eEvery function decompiled will trigger this matcher to get called.  The order of method\n calls is: {@link #start(ClangNode)}, repeated calls to {@link #getTokenHighlight(ClangToken)}\n and then {@link #end()}.\n@see DecompilerHighlightService",
+  "static": false,
+  "implements": [],
+  "fields": [],
+  "methods": [
+    {
+      "name": "start",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "root",
+          "type_long": "ghidra.app.decompiler.ClangNode",
+          "type_short": "ClangNode",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "end",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "getTokenHighlight",
+      "comment": "The basic method clients must implement to determine if a token should be highlighted.\n Returning a non-null Color will trigger the given token to be highlighted.",
+      "javadoc": "The basic method clients must implement to determine if a token should be highlighted.\n Returning a non-null Color will trigger the given token to be highlighted.\n@param token the token\n@return the highlight color or null",
+      "static": false,
+      "params": [
+        {
+          "name": "token",
+          "type_long": "ghidra.app.decompiler.ClangToken",
+          "type_short": "ClangToken",
+          "comment": "the token"
+        }
+      ],
+      "return": {
+        "type_long": "java.awt.Color",
+        "type_short": "Color",
+        "comment": "the highlight color or null"
+      },
+      "throws": []
+    }
+  ]
+}

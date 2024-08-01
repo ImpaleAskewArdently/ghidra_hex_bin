@@ -1,0 +1,133 @@
+{
+  "name": "TokenKey",
+  "comment": "",
+  "javadoc": "",
+  "static": false,
+  "implements": [],
+  "extends": "java.lang.Object",
+  "fields": [
+    {
+      "name": "token",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "type_long": "ghidra.app.decompiler.ClangToken",
+      "type_short": "ClangToken",
+      "constant_value": null
+    }
+  ],
+  "methods": [
+    {
+      "name": "\u003cinit\u003e",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "token",
+          "type_long": "ghidra.app.decompiler.ClangToken",
+          "type_short": "ClangToken",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "\u003cinit\u003e",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "t",
+          "type_long": "ghidra.app.decompiler.component.HighlightToken",
+          "type_short": "HighlightToken",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "hashCode",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "int",
+        "type_short": "int",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "equals",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "obj",
+          "type_long": "java.lang.Object",
+          "type_short": "Object",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "boolean",
+        "type_short": "boolean",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "sameLines",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "l1",
+          "type_long": "ghidra.app.decompiler.ClangLine",
+          "type_short": "ClangLine",
+          "comment": ""
+        },
+        {
+          "name": "l2",
+          "type_long": "ghidra.app.decompiler.ClangLine",
+          "type_short": "ClangLine",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "boolean",
+        "type_short": "boolean",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "toString",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "java.lang.String",
+        "type_short": "String",
+        "comment": ""
+      },
+      "throws": []
+    }
+  ]
+}

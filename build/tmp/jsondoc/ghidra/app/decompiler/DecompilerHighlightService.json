@@ -1,0 +1,56 @@
+{
+  "name": "DecompilerHighlightService",
+  "comment": "A service that allows clients to create highlights in the form of background colors for\n ClangTokens in the Decompiler UI.\n \n Note: highlights apply to a full token and not strings of text.  To highlight a token, you\n create an instance of the CTokenHighlightMatcher to pass to one of the\n #createHighlighter(String, CTokenHighlightMatcher) methods of this interface.\n \n There is no limit to the number of highlighters that may be installed.  If multiple\n highlights overlap, then their colors will be blended.",
+  "javadoc": "A service that allows clients to create highlights in the form of background colors for\n {@link ClangToken}s in the Decompiler UI.\n \n \u003cp\u003eNote: highlights apply to a full token and not strings of text.  To highlight a token, you\n create an instance of the {@link CTokenHighlightMatcher} to pass to one of the\n {@link #createHighlighter(String, CTokenHighlightMatcher)} methods of this interface.\n \n \u003cp\u003eThere is no limit to the number of highlighters that may be installed.  If multiple\n highlights overlap, then their colors will be blended.",
+  "static": false,
+  "implements": [],
+  "fields": [],
+  "methods": [
+    {
+      "name": "createHighlighter",
+      "comment": "Creates a highlighter that will use the given matcher to create highlights as functions\n get decompiled.",
+      "javadoc": "Creates a highlighter that will use the given matcher to create highlights as functions\n get decompiled.\n@param tm the matcher\n@return the new highlighter",
+      "static": false,
+      "params": [
+        {
+          "name": "tm",
+          "type_long": "ghidra.app.decompiler.CTokenHighlightMatcher",
+          "type_short": "CTokenHighlightMatcher",
+          "comment": "the matcher"
+        }
+      ],
+      "return": {
+        "type_long": "ghidra.app.decompiler.DecompilerHighlighter",
+        "type_short": "DecompilerHighlighter",
+        "comment": "the new highlighter"
+      },
+      "throws": []
+    },
+    {
+      "name": "createHighlighter",
+      "comment": "A version of #createHighlighter(String, CTokenHighlightMatcher) that allows clients\n to specify an ID.  This ID will be used to ensure that any existing highlighters with that\n ID will be removed before creating a new highlighter.\n \n This method is convenient for scripts, since a script cannot hold on to any created\n highlighters between repeated script executions.   A good value for script writers to use\n is the name of their script class.",
+      "javadoc": "A version of {@link #createHighlighter(String, CTokenHighlightMatcher)} that allows clients\n to specify an ID.  This ID will be used to ensure that any existing highlighters with that\n ID will be removed before creating a new highlighter.\n \n \u003cp\u003eThis method is convenient for scripts, since a script cannot hold on to any created\n highlighters between repeated script executions.   A good value for script writers to use\n is the name of their script class.\n@param id the ID\n@param tm the matcher\n@return the new highlighter",
+      "static": false,
+      "params": [
+        {
+          "name": "id",
+          "type_long": "java.lang.String",
+          "type_short": "String",
+          "comment": "the ID"
+        },
+        {
+          "name": "tm",
+          "type_long": "ghidra.app.decompiler.CTokenHighlightMatcher",
+          "type_short": "CTokenHighlightMatcher",
+          "comment": "the matcher"
+        }
+      ],
+      "return": {
+        "type_long": "ghidra.app.decompiler.DecompilerHighlighter",
+        "type_short": "DecompilerHighlighter",
+        "comment": "the new highlighter"
+      },
+      "throws": []
+    }
+  ]
+}

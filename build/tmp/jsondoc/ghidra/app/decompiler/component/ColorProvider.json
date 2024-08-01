@@ -1,0 +1,30 @@
+{
+  "name": "ColorProvider",
+  "comment": "Functional interface to allow us to map a token to a color.\n \n This class allows us to avoid the namespace conflicts of Java\u0027s Function and Ghidra\u0027s\n Function since we can declare a  as a parameter to methods instead of\n a Function.",
+  "javadoc": "Functional interface to allow us to map a token to a color.\n \n \u003cp\u003eThis class allows us to avoid the namespace conflicts of Java\u0027s Function and Ghidra\u0027s\n Function since we can declare a {@code ColorProvider} as a parameter to methods instead of\n a {@link Function}.",
+  "static": false,
+  "implements": [],
+  "fields": [],
+  "methods": [
+    {
+      "name": "getColor",
+      "comment": "Returns a color for the given token",
+      "javadoc": "Returns a color for the given token\n@param token the token\n@return the color",
+      "static": false,
+      "params": [
+        {
+          "name": "token",
+          "type_long": "ghidra.app.decompiler.ClangToken",
+          "type_short": "ClangToken",
+          "comment": "the token"
+        }
+      ],
+      "return": {
+        "type_long": "java.awt.Color",
+        "type_short": "Color",
+        "comment": "the color"
+      },
+      "throws": []
+    }
+  ]
+}

@@ -22,10 +22,10 @@ Thumbs.db
 /*/*/build/
 /*/bin/
 /*/build/
-/build/
+# /build/
 /bin/
 
-**/dist
+# **/dist
 
 # Ignore Sleigh generated files
 *.sla

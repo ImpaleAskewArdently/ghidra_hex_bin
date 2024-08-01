@@ -1,0 +1,298 @@
+{
+  "name": "Conv",
+  "comment": "Helper methods for converting between\n number data types without negative\n promotion.\n \n Consider using java built-in methods for conversion instead of methods from this\n class.",
+  "javadoc": "Helper methods for converting between\n number data types without negative\n promotion.\n \u003cp\u003e\n Consider using java built-in methods for conversion instead of methods from this\n class.",
+  "static": false,
+  "implements": [],
+  "extends": "java.lang.Object",
+  "fields": [
+    {
+      "name": "BYTE_MASK",
+      "comment": "A byte mask.",
+      "javadoc": "A byte mask.\n@deprecated {@link Byte#toUnsignedInt(byte)} will handle most use cases of this constant",
+      "static": true,
+      "type_long": "int",
+      "type_short": "int",
+      "constant_value": "255"
+    },
+    {
+      "name": "SHORT_MASK",
+      "comment": "A short mask.",
+      "javadoc": "A short mask.\n@deprecated {@link Short#toUnsignedInt(short)} will handle most use cases of this constant",
+      "static": true,
+      "type_long": "int",
+      "type_short": "int",
+      "constant_value": "65535"
+    },
+    {
+      "name": "INT_MASK",
+      "comment": "An integer mask.",
+      "javadoc": "An integer mask.\n@deprecated {@link Integer#toUnsignedLong(int)} will handle most use cases of this constant",
+      "static": true,
+      "type_long": "long",
+      "type_short": "long",
+      "constant_value": "4294967295"
+    }
+  ],
+  "methods": [
+    {
+      "name": "\u003cinit\u003e",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "byteToShort",
+      "comment": "",
+      "javadoc": "@param b the byte\n@return the short equivalent of the byte\n@deprecated Use other built-ins like {@link Byte#toUnsignedInt(byte)}",
+      "static": true,
+      "params": [
+        {
+          "name": "b",
+          "type_long": "byte",
+          "type_short": "byte",
+          "comment": "the byte"
+        }
+      ],
+      "return": {
+        "type_long": "short",
+        "type_short": "short",
+        "comment": "the short equivalent of the byte"
+      },
+      "throws": []
+    },
+    {
+      "name": "byteToInt",
+      "comment": "Converts a byte to an integer.",
+      "javadoc": "Converts a byte to an integer.\n@param b the byte\n@return the integer equivalent of the byte\n@deprecated Use {@link Byte#toUnsignedInt(byte)} instead",
+      "static": true,
+      "params": [
+        {
+          "name": "b",
+          "type_long": "byte",
+          "type_short": "byte",
+          "comment": "the byte"
+        }
+      ],
+      "return": {
+        "type_long": "int",
+        "type_short": "int",
+        "comment": "the integer equivalent of the byte"
+      },
+      "throws": []
+    },
+    {
+      "name": "byteToLong",
+      "comment": "Converts a byte to a long.",
+      "javadoc": "Converts a byte to a long.\n@param b the byte\n@return the long equivalent of the byte\n@deprecated Use {@link Byte#toUnsignedLong(byte)} instead",
+      "static": true,
+      "params": [
+        {
+          "name": "b",
+          "type_long": "byte",
+          "type_short": "byte",
+          "comment": "the byte"
+        }
+      ],
+      "return": {
+        "type_long": "long",
+        "type_short": "long",
+        "comment": "the long equivalent of the byte"
+      },
+      "throws": []
+    },
+    {
+      "name": "shortToInt",
+      "comment": "Converts a short to an integer.",
+      "javadoc": "Converts a short to an integer.\n@param s the short\n@return the integer equivalent of the short\n@deprecated Use {@link Short#toUnsignedInt(short)} instead",
+      "static": true,
+      "params": [
+        {
+          "name": "s",
+          "type_long": "short",
+          "type_short": "short",
+          "comment": "the short"
+        }
+      ],
+      "return": {
+        "type_long": "int",
+        "type_short": "int",
+        "comment": "the integer equivalent of the short"
+      },
+      "throws": []
+    },
+    {
+      "name": "shortToLong",
+      "comment": "Converts a short to a long.",
+      "javadoc": "Converts a short to a long.\n@param s the short\n@return the long eqivalent of the short\n@deprecated Use {@link Short#toUnsignedLong(short)} instead",
+      "static": true,
+      "params": [
+        {
+          "name": "s",
+          "type_long": "short",
+          "type_short": "short",
+          "comment": "the short"
+        }
+      ],
+      "return": {
+        "type_long": "long",
+        "type_short": "long",
+        "comment": "the long eqivalent of the short"
+      },
+      "throws": []
+    },
+    {
+      "name": "intToLong",
+      "comment": "Converts an integer to a long.",
+      "javadoc": "Converts an integer to a long.\n@param i the integer\n@return the long equivalent of the long\n@deprecated Use {@link Integer#toUnsignedLong(int)} instead",
+      "static": true,
+      "params": [
+        {
+          "name": "i",
+          "type_long": "int",
+          "type_short": "int",
+          "comment": "the integer"
+        }
+      ],
+      "return": {
+        "type_long": "long",
+        "type_short": "long",
+        "comment": "the long equivalent of the long"
+      },
+      "throws": []
+    },
+    {
+      "name": "toString",
+      "comment": "\n Old and incorrect way to convert bytes to a String by casting their\n values to chars.  Do not use.  Does not seem to be used in current codebase.\n ",
+      "javadoc": "\u003cp\u003e\n Old and \u003cb\u003eincorrect\u003c/b\u003e way to convert bytes to a String by casting their\n values to chars.  Do not use.  Does not seem to be used in current codebase.\n \u003cp\u003e\n@param array\n@return \n@deprecated Use {@link String#String(byte[], java.nio.charset.Charset) new String(bytes, StandardCharSets.US_ASCII)}\n instead",
+      "static": true,
+      "params": [
+        {
+          "name": "array",
+          "type_long": "byte[]",
+          "type_short": "byte[]",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "java.lang.String",
+        "type_short": "String",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "toHexString",
+      "comment": "Consider using String#format(String, Object...) instead.\n \n Converts a byte into a padded hex string.",
+      "javadoc": "Consider using {@link String#format(String, Object...) String.format(\"%02x\", b)} instead.\n \u003cp\u003e\n Converts a byte into a padded hex string.\n@param b the byte\n@return the padded hex string",
+      "static": true,
+      "params": [
+        {
+          "name": "b",
+          "type_long": "byte",
+          "type_short": "byte",
+          "comment": "the byte"
+        }
+      ],
+      "return": {
+        "type_long": "java.lang.String",
+        "type_short": "String",
+        "comment": "the padded hex string"
+      },
+      "throws": []
+    },
+    {
+      "name": "toHexString",
+      "comment": "Consider using String#format(String, Object...) instead.\n \n Converts a short into a padded hex string.",
+      "javadoc": "Consider using {@link String#format(String, Object...) String.format(\"%04x\", s)} instead.\n \u003cp\u003e\n Converts a short into a padded hex string.\n@param s the short\n@return the padded hex string",
+      "static": true,
+      "params": [
+        {
+          "name": "s",
+          "type_long": "short",
+          "type_short": "short",
+          "comment": "the short"
+        }
+      ],
+      "return": {
+        "type_long": "java.lang.String",
+        "type_short": "String",
+        "comment": "the padded hex string"
+      },
+      "throws": []
+    },
+    {
+      "name": "toHexString",
+      "comment": "Consider using String#format(String, Object...) instead.\n \n Converts an integer into a padded hex string.",
+      "javadoc": "Consider using {@link String#format(String, Object...) String.format(\"%08x\", i)} instead.\n \u003cp\u003e\n Converts an integer into a padded hex string.\n@param i the integer\n@return the padded hex string",
+      "static": true,
+      "params": [
+        {
+          "name": "i",
+          "type_long": "int",
+          "type_short": "int",
+          "comment": "the integer"
+        }
+      ],
+      "return": {
+        "type_long": "java.lang.String",
+        "type_short": "String",
+        "comment": "the padded hex string"
+      },
+      "throws": []
+    },
+    {
+      "name": "toHexString",
+      "comment": "Consider using String#format(String, Object...) instead.\n \n Converts a long into a padded hex string.",
+      "javadoc": "Consider using {@link String#format(String, Object...) String.format(\"%016x\", l)} instead.\n \u003cp\u003e\n Converts a long into a padded hex string.\n@param l the long\n@return the padded hex string",
+      "static": true,
+      "params": [
+        {
+          "name": "l",
+          "type_long": "long",
+          "type_short": "long",
+          "comment": "the long"
+        }
+      ],
+      "return": {
+        "type_long": "java.lang.String",
+        "type_short": "String",
+        "comment": "the padded hex string"
+      },
+      "throws": []
+    },
+    {
+      "name": "zeropad",
+      "comment": "Returns a string that is extended to length len with zeroes.",
+      "javadoc": "Returns a string that is extended to length len with zeroes.\n@param s The string to pad\n@param len The length of the return string\n@return A string that has been left-padded with zeros to be of length len",
+      "static": true,
+      "params": [
+        {
+          "name": "s",
+          "type_long": "java.lang.String",
+          "type_short": "String",
+          "comment": "The string to pad"
+        },
+        {
+          "name": "len",
+          "type_long": "int",
+          "type_short": "int",
+          "comment": "The length of the return string"
+        }
+      ],
+      "return": {
+        "type_long": "java.lang.String",
+        "type_short": "String",
+        "comment": "A string that has been left-padded with zeros to be of length len"
+      },
+      "throws": []
+    }
+  ]
+}

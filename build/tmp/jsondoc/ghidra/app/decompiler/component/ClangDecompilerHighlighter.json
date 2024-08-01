@@ -1,0 +1,265 @@
+{
+  "name": "ClangDecompilerHighlighter",
+  "comment": "The implementation of DecompilerHighlighter.  This will get created by the\n Decompiler and then handed to clients that use the DecompilerHighlightService.  This\n is also used internally for \u0027secondary highlights\u0027.\n \n This class may be #clone() or #copy(DecompilerPanel) as\n needed when the user creates a snapshot.  Highlight service highlighters will be cloned;\n secondary highlighters will be copied.  Cloning allows this class to delegate highlighting\n and cleanup for clones.  Contrastingly, copying allows the secondary highlights to operate\n independently.",
+  "javadoc": "The implementation of {@link DecompilerHighlighter}.  This will get created by the\n Decompiler and then handed to clients that use the {@link DecompilerHighlightService}.  This\n is also used internally for \u0027secondary highlights\u0027.\n \n \u003cp\u003eThis class may be {@link #clone() cloned} or {@link #copy(DecompilerPanel) copied} as\n needed when the user creates a snapshot.  Highlight service highlighters will be cloned;\n secondary highlighters will be copied.  Cloning allows this class to delegate highlighting\n and cleanup for clones.  Contrastingly, copying allows the secondary highlights to operate\n independently.",
+  "static": false,
+  "implements": [
+    "ghidra.app.decompiler.DecompilerHighlighter"
+  ],
+  "extends": "java.lang.Object",
+  "fields": [
+    {
+      "name": "id",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "type_long": "java.lang.String",
+      "type_short": "String",
+      "constant_value": null
+    },
+    {
+      "name": "decompilerPanel",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "type_long": "ghidra.app.decompiler.component.DecompilerPanel",
+      "type_short": "DecompilerPanel",
+      "constant_value": null
+    },
+    {
+      "name": "matcher",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "type_long": "ghidra.app.decompiler.CTokenHighlightMatcher",
+      "type_short": "CTokenHighlightMatcher",
+      "constant_value": null
+    },
+    {
+      "name": "clones",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "type_long": "java.util.Set\u003cghidra.app.decompiler.component.ClangDecompilerHighlighter\u003e",
+      "type_short": "Set",
+      "constant_value": null
+    }
+  ],
+  "methods": [
+    {
+      "name": "\u003cinit\u003e",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "panel",
+          "type_long": "ghidra.app.decompiler.component.DecompilerPanel",
+          "type_short": "DecompilerPanel",
+          "comment": ""
+        },
+        {
+          "name": "matcher",
+          "type_long": "ghidra.app.decompiler.CTokenHighlightMatcher",
+          "type_short": "CTokenHighlightMatcher",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "\u003cinit\u003e",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "id",
+          "type_long": "java.lang.String",
+          "type_short": "String",
+          "comment": ""
+        },
+        {
+          "name": "panel",
+          "type_long": "ghidra.app.decompiler.component.DecompilerPanel",
+          "type_short": "DecompilerPanel",
+          "comment": ""
+        },
+        {
+          "name": "matcher",
+          "type_long": "ghidra.app.decompiler.CTokenHighlightMatcher",
+          "type_short": "CTokenHighlightMatcher",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "clone",
+      "comment": "Create a clone of this highlighter and tracks the clone",
+      "javadoc": "Create a clone of this highlighter and tracks the clone\n@param panel the panel\n@return the highlighter",
+      "static": false,
+      "params": [
+        {
+          "name": "panel",
+          "type_long": "ghidra.app.decompiler.component.DecompilerPanel",
+          "type_short": "DecompilerPanel",
+          "comment": "the panel"
+        }
+      ],
+      "return": {
+        "type_long": "ghidra.app.decompiler.component.ClangDecompilerHighlighter",
+        "type_short": "ClangDecompilerHighlighter",
+        "comment": "the highlighter"
+      },
+      "throws": []
+    },
+    {
+      "name": "copy",
+      "comment": "Creates a copy of this highlighter that is not tracked by this highlighter",
+      "javadoc": "Creates a copy of this highlighter that is not tracked by this highlighter\n@param panel the panel\n@return the highlighter",
+      "static": false,
+      "params": [
+        {
+          "name": "panel",
+          "type_long": "ghidra.app.decompiler.component.DecompilerPanel",
+          "type_short": "DecompilerPanel",
+          "comment": "the panel"
+        }
+      ],
+      "return": {
+        "type_long": "ghidra.app.decompiler.component.ClangDecompilerHighlighter",
+        "type_short": "ClangDecompilerHighlighter",
+        "comment": "the highlighter"
+      },
+      "throws": []
+    },
+    {
+      "name": "applyHighlights",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "gatherHighlights",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "root",
+          "type_long": "ghidra.app.decompiler.ClangTokenGroup",
+          "type_short": "ClangTokenGroup",
+          "comment": ""
+        },
+        {
+          "name": "results",
+          "type_long": "java.util.Map\u003cghidra.app.decompiler.ClangToken,java.awt.Color\u003e",
+          "type_short": "Map",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "getHighlight",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [
+        {
+          "name": "node",
+          "type_long": "ghidra.app.decompiler.ClangNode",
+          "type_short": "ClangNode",
+          "comment": ""
+        },
+        {
+          "name": "results",
+          "type_long": "java.util.Map\u003cghidra.app.decompiler.ClangToken,java.awt.Color\u003e",
+          "type_short": "Map",
+          "comment": ""
+        }
+      ],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "clearHighlights",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "dispose",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "void",
+        "type_short": "void",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "getId",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "java.lang.String",
+        "type_short": "String",
+        "comment": ""
+      },
+      "throws": []
+    },
+    {
+      "name": "toString",
+      "comment": "",
+      "javadoc": "",
+      "static": false,
+      "params": [],
+      "return": {
+        "type_long": "java.lang.String",
+        "type_short": "String",
+        "comment": ""
+      },
+      "throws": []
+    }
+  ]
+}
